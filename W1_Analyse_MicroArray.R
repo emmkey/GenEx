@@ -9,43 +9,24 @@
 # Installation:
 source("https://bioconductor.org/biocLite.R")
 biocLite("affy")
+bioLite ("hgu133plus2.db")
 
-# Lade affy package im Programm:
+# Lade affy package und hgu133plus2.db (fuehr spaetere Genzuordnung) im Programm:
 library("affy")
+library("hgu133plus2.db")
 
 # Lese alle .CEL-Dateien im "Working Directory" ein:
 Data <- ReadAffy()
 
-# RNA-Normalisierung:
-# Currently the rma function implements RMA in the following manner:
-# 1.Probe specific correction of the PM probes using a model based on observed intensity being the sum of signal and noise
-# 2.Normalization of corrected PM probes using quantile normalization
-# 3.Calculation of Expression measure using median polish
-eset <- rma(Data)
 # Alternative Normalisierung Beispiel:
 # eset <- mas5(Data)
-
-# Speichern der Variable eset (Klasse: ExpressionSet) in Textdatei:
-# write.exprs(eset, file="mydata.txt")
-
-# Wandele "Probe level data" in "Expression values" um:
-# eset <- expresso(Dilution, normalize.method="qspline", bgcorrect.method="rma", pmcorrect.method="pmonly", summary.method="liwong")
-
-# Ausgeben weiterer Informationen der Samples (falls gegeben):
-# phenoData(Data)
-# pData(Data)
 
 # Ausgegeben der MMs, PMs und affyIDs:
 # pm(Data)
 # mm(Data)
 # probeNames(Data)
 
-# Diagramm-Erstellung der Rohdaten:
-hist(Data)
-# boxplot(Data)
-# MAplot(Dilution,pairs=TRUE,plot.method="smoothScatter")
-
-# Richtige Normalisierung:
+# Normalisierung:
 Data.normalized <- normalize(Data)
 
 # Diagramm-Erstellung:
@@ -64,3 +45,31 @@ plotAffyRNAdeg(degR1)
 plotAffyRNAdeg(degR2)
 plotAffyRNAdeg(degN1)
 plotAffyRNAdeg(degN2)
+
+# RNA-Normalisierung:
+eset <- rma(Data)
+
+# affyIDs zu Genen zuordnen:
+
+# Alle affyIDs aus ExpressionSet auslesen:
+affyids <- featureNames(eset)
+
+# 6 Beispiel-IDs ausgeben:
+cat("\nAffyID Beispiele:\n")
+print(affyids[1:6])
+
+# Mit columns(hgu133plus2.db) kann abgefragt werden, was man aus den affyIDs erhalten moechte:
+cat("\nBeispiele fuer ''Ausgaben'' mit select\n")
+print(columns(hgu133plus2.db))
+
+# Wir entscheiden uns hier erstmal nur fuer "GENENAME" (mehrere koennten als Vektor eingegeben werden):
+genenames <- select(hgu133plus2.db, affyids, "GENENAME")
+
+# Wir erhalten eine Matrix mit folgenden Dimensionen:
+cat("\nMatrixdimension:\n")
+print(dim(genenames))
+cat("1: AffyID, 2: Genname\n")
+
+# Beispiel fuer Gennamen mit dazugehoeriger AffyID abfragen
+cat("\nBeispiele fuer Gennamen mit dazugehoeriger AffyID:\n")
+print(genenames[1:5, ])
