@@ -48,6 +48,9 @@ plotAffyRNAdeg(degR2)
 plotAffyRNAdeg(degN1)
 plotAffyRNAdeg(degN2)
 
+# image auslesen:
+image(Data)
+
 # RNA-Normalisierung:
 eset <- rma(Data)
 
