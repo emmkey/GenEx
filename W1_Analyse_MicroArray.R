@@ -2,18 +2,20 @@
 # File: W1_Analyse_MicroArray.R
 # Title: SWP Programm Woche 1 - Einfuehrung in MicroArrays
 # By: Yannic Lapawczyk, Silver Wolf, Michael Krivab
-# Date: 19.03.2016
+# Date: 22.03.2016
 # Version: 1.0 (Praesentationsversion)
 # ---------------------------------------------------------
 
 # Installation:
 source("https://bioconductor.org/biocLite.R")
 biocLite("affy")
-bioLite ("hgu133plus2.db")
+biocLite("hgu133plus2.db")
+biocLite("affyQCReport")
 
-# Lade affy package und hgu133plus2.db (fuehr spaetere Genzuordnung) im Programm:
+# Lade affy package, hgu133plus2.db (Genzuordnung) und affyQCReport (QC-PDF) im Programm:
 library("affy")
 library("hgu133plus2.db")
+library("affyQCReport")
 
 # Lese alle .CEL-Dateien im "Working Directory" ein:
 Data <- ReadAffy()
@@ -70,6 +72,10 @@ cat("\nMatrixdimension:\n")
 print(dim(genenames))
 cat("1: AffyID, 2: Genname\n")
 
-# Beispiel fuer Gennamen mit dazugehoeriger AffyID abfragen
+# Beispiel fuer Gennamen mit dazugehoeriger AffyID abfragen:
 cat("\nBeispiele fuer Gennamen mit dazugehoeriger AffyID:\n")
 print(genenames[1:5, ])
+
+# Quality-Control PDF erstellen:
+QCReport(Data,file="W1QC.pdf")
+QCReport(Data.normalized,file="W1QC_Normalisiert.pdf")
