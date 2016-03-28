@@ -26,10 +26,10 @@ image(Data_All)
 
 # Normalisierung:
 Data_All_rma <- rma(Data_All)
-Data_All_mas5 <- mas5(Data_All,sc ="150")
+Data_All_mas5 <- mas5(Data_All)
 
 Data_Ohne_Aussreisser_rma <- rma(Data_Ohne_Aussreisser)
-Data_Ohne_Aussreisser_mas5 <- mas5(Data_Ohne_Aussreisser,sc ="150")
+Data_Ohne_Aussreisser_mas5 <- mas5(Data_Ohne_Aussreisser)
 
 # Histogramm-Erstellung:
 hist(Data_All)
@@ -52,6 +52,10 @@ QCReport(Data_Ohne_Aussreisser,file="W2QC_Ohne_Aussreisser.pdf")
 
 # Heatmap erstellen:
 heatmap(exprs(Data_All_rma[1:100,]))
+heatmap(exprs(Data_All_mas5[1:100,]))
+
+heatmap(exprs(Data_Ohne_Aussreisser_rma[1:100,]))
+heatmap(exprs(Data_Ohne_Aussreisser_mas5[1:100,]))
 
 # Ausgegeben der MMs, PMs und affyIDs:
 # pm(Data_All)
