@@ -1,7 +1,7 @@
 # ---------------------------------------------------------
 # File: W2_MicroArray_Extension.R
 # Title: SWP Programm Woche 2 - Einfuehrung in MicroArrays
-# By: Yannic Lapawczyk, Silver Wolf, Michael Krivab
+# By: Yannic Lapawczyk, Silver Wolf, Michael Krivan
 # Date: 29.03.2016
 # Version: 1.0 (Praesentationsversion)
 # ---------------------------------------------------------
@@ -11,11 +11,13 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("affy")
 biocLite("hgu133plus2.db")
 biocLite("affyQCReport")
+biocLite("affyPLM")
 
 # Lade affy package, hgu133plus2.db (Genzuordnung) und affyQCReport (QC-PDF) im Programm:
 library("affy")
 library("hgu133plus2.db")
 library("affyQCReport")
+library("affyPLM")
 
 # Lese .CEL-Dateien im "Working Directory" ein:
 Data_All <- ReadAffy()
@@ -56,6 +58,26 @@ heatmap(exprs(Data_All_mas5[1:100,]))
 
 heatmap(exprs(Data_Ohne_Aussreisser_rma[1:100,]))
 heatmap(exprs(Data_Ohne_Aussreisser_mas5[1:100,]))
+
+# Heatmap mit topographischen Farben(gelb, gruen, blau)
+heatmap(exprs(Data_All_rma[1:100,]),col=topo.colors(100))
+heatmap(exprs(Data_All_mas5[1:100,]),col=topo.colors(100))
+heatmap(exprs(Data_Ohne_Aussreisser_rma[1:100,]),col=topo.colors(100))
+heatmap(exprs(Data_Ohne_Aussreisser_mas5[1:100,]),col=topo.colors(100))
+
+# Probe Level Model Fitting (Default ist RMA)
+
+Pset_All <- fitPLM(Data_All)
+Pset_OA <- fitPLM(Data_Ohne_Aussreisser)
+
+  # Parameter Schaetzwerte für die ersten 10 AffyIDs
+  coefs(Pset_All)[1:10,]
+  coefs(Pset_OA)[1:10,]
+  
+  # Standardfehler für die ersten 10 AffyIDs
+  se(Pset_All)[1:10,]
+  se(Pset_All)[1:10,]
+
 
 # Erstellen der beiden Normalisierungs-Tabellen:
 
