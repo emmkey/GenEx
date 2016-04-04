@@ -53,10 +53,9 @@ if ($conn->connect_error) {
 $tablename = strval(time());
 echo 'Tabellenname: ' . $tablename . "<br>";
 
-// sql to create table
+//Tabelle erstellen, die vorerst nur die AffyID als Key enthaelt
 $sql = "CREATE TABLE `$tablename` (
-affyid VARCHAR(30) PRIMARY KEY, 
-info VARCHAR(100) NOT NULL
+AffyID VARCHAR(30) PRIMARY KEY
 )";
 
 
@@ -67,45 +66,111 @@ if ($conn->query($sql) === TRUE) {
     echo "<br> Error bei Tabellenerstellung: " . $conn->error;
 }
 
+//Array fuer Header erstellen (wird nach der For-Schleife,
+//zum Einfuegen der Daten in die Tabelle benoetigt)
+$header_array = array();
+$header_array[] = "AffyID";
+
+//Spalten fuer Info und CEL-Files anfuegen
+for ($x = 1; $x < sizeof($num_colums[0]); $x++) {
+	$col_name = $num_colums[0][$x];
+	
+	//pruefen, ob .CEL nicht enthalten ist 
+	//dann nur die Anfuehrungszeichen wegschneiden
+	if (strpos($col_name, '.CEL') == false) {
+    		$col_name = substr($col_name,1,-1);
+	//Wenn .CEL vorhanden, dann Anfuehrungszeichen und ".CEL" wegschneiden	
+	} else {
+		$col_name = substr($col_name,1,-5);
+	}
+	
+	//zurechtgeschnittene Zeilenbezeichnung in header-array schreiben
+	$header_array[] = $col_name;
+
+	$alter_query = "ALTER TABLE `$tablename` ADD `$col_name` VARCHAR(200) NOT NULL";
+	if ($conn->query($alter_query) === TRUE) {
+		echo "<br>" . "Spalte fuer CEL-File hinzugefuegt";
+	} else {
+		echo "<br>" . "Fehler beim Hinzufuegen der CEL-Spalten";
+	}
+} 
+
+//Array in String Komma-Separierten String umschreiben
+$comma_separated = implode(", ",$header_array);
+echo $comma_separated;
+
+/* UMWEG!!!
+//Header bekommen
+$header_query = "SHOW columns FROM `$tablename`";
+
+//Header holen, um Spaltennamen fuer 
+$result = $conn->query($header_query);
+$result_array = $result->fetch_all(MYSQLI_NUM);
+*/	
+    	
+
+//Jetzt kann die Tabelle gefuellt werden
+
+$file_to_db = 	"LOAD DATA LOCAL INFILE '" . $filename . "' 
+		INTO TABLE `$tablename` 
+		FIELDS TERMINATED BY '\\t' 
+		OPTIONALLY ENCLOSED BY '\"' 
+		LINES TERMINATED BY '\\n'
+		IGNORE 1 LINES
+		($comma_separated)";
+
+
+if ($conn->query($file_to_db) === TRUE) {
+	//printf($conn->error);
+	echo "<br> File erfolgreich in Tabelle!!!";	
+
+} else {
+	printf($conn->error);
+	echo "<br> Fehler beim Einfuegen in Tabelle";
+}
+
+//Text-File Zeile fuer Zeile durchgehen
+//Textfile einlesen/oeffnen; "r" fuer: read-only
+/*
+$myfile = fopen($filename, "r");
+if ($myfile) {
+    while (($line = fgets($myfile)) !== false) {
+	//Line to array
+	preg_match_all('/"[^"]*"/', $line, $line_array);
+	//Anfuehrungszeichen entfernen
+	for($x = 0; $x < sizeof($line_array[0]); $x++) {
+		$line_array[0][$x] = substr($line_array[0][$x],1,-1);
+	}
+	//VALUES ('John', 'Doe', 'john@example.com')";
+	//Array in String
+	$separated_line = implode("', '",$line_array);
+	$separated_line = "'".$separated_line."'";
+        $insert_query = "INSERT INTO `tablename` (`$comma_separated`)
+			VALUES (`separated_line`)";
+	if ($conn->query($insert_query) === TRUE) {
+		echo "<br> Zeile eingefuegt";
+	} else {
+		echo "<br> Fehler beim Einfuegen der Zeile";
+	}
+    }
+
+    fclose($myfile);
+}
+*/
+/*
+$sql = "INSERT INTO `tablename` (`$comma_separated`)
+VALUES ('John', 'Doe', 'john@example.com')";
+*/
+
 //Loeschen der Tabelle!!!!!!!!!!!!!!!!!
+/*
 $deletequery = "DROP TABLE `$tablename`";
 if ($conn->query($deletequery) === TRUE) {
     echo "<br> Tabelle $tablename erfolgreich geloescht";
 } else {
     echo "<br> Error beim Loeschen der Tabelle: " . $conn->error;
 }
-
+*/
 $conn->close();
-
-
-
-
-
-/*
-echo "so gross ist" . count($num_colums[0]) . "<br>";
-echo "das ist erste: " . $num_colums[1][0];
-echo '$num_colums[0][0]: ' . $num_colums[0][0] . "<br>";
-echo '$num_colums[0][1]: ' . $num_colums[0][1] . "<br>";
-echo '$num_colums[0]: ' . $num_colums[0] . "<br>";
-echo '$num_colums[1]: ' . $num_colums[1] . "<br>";
-echo '$num_colums[1][0]: ' . $num_colums[1][0] . "<br>";
-*/
-
-/*
-//Textfile einlesen/oeffnen; "r" fuer: read-only
-$filename = celfile.txt
-$handle = fopen("inputfile.txt", "r");
-if ($handle) {
-    while (($line = fgets($handle)) !== false) {
-        // process the line read.
-    }
-
-    fclose($handle);
-} else {
-    // error opening the file.
-} 
-
-
-*/
 ?>
 

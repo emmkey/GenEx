@@ -44,10 +44,6 @@
 
       <div class="jumbotron">
 		<?php
-			echo "das ist p_name: " . $p_name;
-			//echo $_GET['page']."<br>";
-			//Dateinamen rausschreiben
-			//$p_name = isset($_GET['page']) ? $_GET['page'] : "home";
 			//Pfad zusammensetzen
 			$page_path = "dynamic_sites/" . $p_name . ".php";
 			
