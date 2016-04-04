@@ -1,13 +1,28 @@
 <?php
+//Abfragen, ob ein File hochgeladen wurde, wenn nicht => zur Startseite
+if ($_FILES['Datei']['tmp_name'] !== 0) {
+	echo '<script type="text/javascript">
+		alert("Upload fehlgeschlagen")
+		window.location.href="index.html";
+		</script>'; 
+}
+
+
 $filename = $_FILES['Datei']['tmp_name'];
-echo "Das ist der Filename: $filename <br>";
+
 //zuerst nur die erste Zeile lesen und parsen,
 //wie viele CEL-Files die Datei hat
 $myfile = fopen($filename, "r") or die("Unable to open file!");
 $firstline = fgets($myfile);
 fclose($myfile);
-echo "Das ist Firstline: $firstline <br>";
+//echo "Das ist Firstline: $firstline <br>";
 preg_match_all('/"[^"]*"/', $firstline, $num_colums);
+
+//Ueberpruefen, ob die Datei das richtige Format hat: 1.Spalte:AffyID && 2.Spalte:GENENAME
+if ((strcmp('"AffyID"', $num_colums[0][0]) !== 0) || (strcmp('"GENENAME"', $num_colums[0][1]) !== 0)) {
+	echo ' <script type="text/javascript">alert("Datei in falschem Format hochgeladen!")</script> ';  	
+	header('Location: index.html');
+}
 $cel_counter = count($num_colums[0]) - 2;
 //echo 'celcounter: ' . $cel_counter;
 
