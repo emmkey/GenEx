@@ -3,7 +3,7 @@
 if ($_FILES['Datei']['error'] !== 0) {
 	echo '<script type="text/javascript">
 		alert("Upload fehlgeschlagen")
-		window.location.href="index.html";
+		window.location.href="index.php?page=txt_to_db";
 		</script>'; 
 }
 
@@ -21,10 +21,10 @@ fclose($myfile);
 preg_match_all('/"[^"]*"/', $firstline, $num_colums);
 
 //Ueberpruefen, ob die Datei das richtige Format hat: 1.Spalte:AffyID && 2.Spalte:GENENAME
-if ((strcmp('"AffyID"', $num_colums[0][0]) !== 0) || (strcmp('"GENENAME"', $num_colums[0][1]) !== 0)) {
+if (strcmp('"AffyID"', $num_colums[0][0]) !== 0) {
 	echo '<script type="text/javascript">
 			alert("Datei in falschem Format hochgeladen!")
-			window.location.href="index.html";
+			window.location.href="index.php?page=txt_to_db";
 		</script>';  	
 }
 
