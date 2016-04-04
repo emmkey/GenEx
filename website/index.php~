@@ -29,9 +29,14 @@
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="index.php?page=home">Home</a></li>
-            <li role="presentation"><a href="index.php?page=txt_to_db">TXT-TO-DB</a></li>
-            <li role="presentation"><a href="index.php?page=cel_upload">Upload CEL-Files</a></li>
+		
+		<?php
+			//$p_name schon einglesen, damit wir in der Navigation damit arbeiten koennen
+			$p_name = isset($_GET['page']) ? $_GET['page'] : "home";
+		?>
+            <li role="presentation" <?php echo $p_name == 'home' ? 'class="active"' : ''; ?>><a href="index.php?page=home">Home</a></li>
+            <li role="presentation" <?php echo $p_name == 'txt_to_db' ? 'class="active"' : ''; ?>><a href="index.php?page=txt_to_db">TXT-TO-DB</a></li>
+            <li role="presentation" <?php echo $p_name == 'cel_upload' ? 'class="active"' : ''; ?>><a href="index.php?page=cel_upload">Upload CEL-Files</a></li>
           </ul>
         </nav>
         <h3 class="text-muted">Microarray Normalization & Analysis</h3>
@@ -39,8 +44,10 @@
 
       <div class="jumbotron">
 		<?php
+			echo "das ist p_name: " . $p_name;
+			//echo $_GET['page']."<br>";
 			//Dateinamen rausschreiben
-			$p_name = isset($_GET['page'] ? $_GET['page'] : "default";
+			//$p_name = isset($_GET['page']) ? $_GET['page'] : "home";
 			//Pfad zusammensetzen
 			$page_path = "dynamic_sites/" . $p_name . ".php";
 			
@@ -48,7 +55,7 @@
 			if(file_exists($page_path)) {
 				include($page_path);
 			//Wenn nichts angelickt wurde => Startseite laden
-			} elseif($p_name == "default") {
+			} elseif($p_name == "home") {
 				include('dynamic_sites/home.php');
 			}
 			//Wenn falscher link eingegeben wurde
@@ -56,7 +63,6 @@
 			else {
 				echo "Seite nicht gefunden!";
 			}	
-					
 		?>
        		
         
