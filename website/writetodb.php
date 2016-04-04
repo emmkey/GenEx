@@ -1,6 +1,6 @@
 <?php
 //Abfragen, ob ein File hochgeladen wurde, wenn nicht => zur Startseite
-if ($_FILES['Datei']['tmp_name'] !== 0) {
+if ($_FILES['Datei']['error'] !== 0) {
 	echo '<script type="text/javascript">
 		alert("Upload fehlgeschlagen")
 		window.location.href="index.html";
@@ -22,13 +22,17 @@ preg_match_all('/"[^"]*"/', $firstline, $num_colums);
 
 //Ueberpruefen, ob die Datei das richtige Format hat: 1.Spalte:AffyID && 2.Spalte:GENENAME
 if ((strcmp('"AffyID"', $num_colums[0][0]) !== 0) || (strcmp('"GENENAME"', $num_colums[0][1]) !== 0)) {
-	echo ' <script type="text/javascript">alert("Datei in falschem Format hochgeladen!")</script> ';  	
-	header('Location: index.html');
+	echo '<script type="text/javascript">
+			alert("Datei in falschem Format hochgeladen!")
+			window.location.href="index.html";
+		</script>';  	
 }
+
+//Zaehlt, wie viele Spalten nach AffyID u. GENENAME kommen => wie viele CEL-Files die Datei "hat"
 $cel_counter = count($num_colums[0]) - 2;
 //echo 'celcounter: ' . $cel_counter;
 
-//Table erstellen
+//Logindaten fuer Datenbank setzen
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -41,10 +45,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$tablename = "ceelfile1";
+
+//Tabellennamen festlegen
+//Gibt die seit Beginn der Unix-Epoche (Januar 1 1970 00:00:00 GMT) bis jetzt vergangenen Sekunden zurück.
+//=> einzigartiger Tabellenname
+//strval: int => string
+$tablename = strval(time());
+echo 'Tabellenname: ' . $tablename . "<br>";
 
 // sql to create table
-$sql = "CREATE TABLE $tablename (
+$sql = "CREATE TABLE `$tablename` (
 affyid VARCHAR(30) PRIMARY KEY, 
 info VARCHAR(100) NOT NULL
 )";
@@ -52,9 +62,17 @@ info VARCHAR(100) NOT NULL
 
 
 if ($conn->query($sql) === TRUE) {
-    echo "Table $tablename created successfully";
+    echo "<br> Tabelle $tablename erfolgreich erstellt";
 } else {
-    echo "Error creating table: " . $conn->error;
+    echo "<br> Error bei Tabellenerstellung: " . $conn->error;
+}
+
+//Loeschen der Tabelle!!!!!!!!!!!!!!!!!
+$deletequery = "DROP TABLE `$tablename`";
+if ($conn->query($deletequery) === TRUE) {
+    echo "<br> Tabelle $tablename erfolgreich geloescht";
+} else {
+    echo "<br> Error beim Loeschen der Tabelle: " . $conn->error;
 }
 
 $conn->close();
