@@ -35,7 +35,7 @@
 			$p_name = isset($_GET['page']) ? $_GET['page'] : "home";
 		?>
             <li role="presentation" <?php echo $p_name == 'home' ? 'class="active"' : ''; ?>><a href="index.php?page=home">Home</a></li>
-            <li role="presentation" <?php echo $p_name == 'txt_to_db' ? 'class="active"' : ''; ?>><a href="index.php?page=txt_to_db">TXT-TO-DB</a></li>
+            <li role="presentation" <?php echo (($p_name == 'txt_to_db') || ($p_name == 'display_txt')) ? 'class="active"' : ''; ?>><a href="index.php?page=txt_to_db">TXT-TO-DB</a></li>
             <li role="presentation" <?php echo $p_name == 'cel_upload' ? 'class="active"' : ''; ?>><a href="index.php?page=cel_upload">Upload CEL-Files</a></li>
           </ul>
         </nav>

@@ -1583,8 +1583,8 @@ pre code {
   overflow-y: scroll;
 }
 .container {
-  padding-right: auto;
-  padding-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -2250,7 +2250,7 @@ pre code {
   }
 }
 table {
-  background-color: transparent;
+  background-color: #444;
 }
 caption {
   padding-top: 8px;
@@ -2279,7 +2279,7 @@ th {
 }
 .table > thead > tr > th {
   vertical-align: bottom;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid #222;
 }
 .table > caption + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > th,

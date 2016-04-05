@@ -129,6 +129,8 @@ if ($conn->query($file_to_db) === TRUE) {
 	echo "<br> Fehler beim Einfuegen in Tabelle";
 }
 
+
+
 //Text-File Zeile fuer Zeile durchgehen
 //Textfile einlesen/oeffnen; "r" fuer: read-only
 /*
@@ -172,5 +174,9 @@ if ($conn->query($deletequery) === TRUE) {
 }
 */
 $conn->close();
+
+echo "<script type=\"text/javascript\">
+		window.location.href=\"index.php?page=display_txt&tbname=$tablename\";
+		</script>"; 
 ?>
 
