@@ -163,6 +163,22 @@ print_to_file <- function(dataset, norm, headerBoolean, info) {
   # Geninfo in Matrix einschieben
   output <- cbind(affyids,modded_info,exprs_vector)
   
+  	minima  <- vector(,nrow(exprs_vector))
+	maxima  <- vector(,nrow(exprs_vector))
+	median  <- vector(,nrow(exprs_vector))
+	standarddev  <- vector(,nrow(exprs_vector))
+	variance <- vector(,nrow(exprs_vector))
+
+  for(i in 1:length(affyids)) {
+	minima[i] <- min(output[i,3:9])
+	maxima[i] <- max(output[i,3:9])
+	median[i] <- median(output[i,3:9])
+	standarddev[i] <- sd(output[i,3:9])
+	variance[i] <- var(output[i,3:9])
+  }
+output_more <- cbind(output, minima, maxima, median, standarddev, variance)
+  
+  
   # header erstellen
   if(isTRUE(headerBoolean)) {
     header <- append(c("AffyID",info),sampleNames(eset),2)
@@ -171,9 +187,9 @@ print_to_file <- function(dataset, norm, headerBoolean, info) {
   }
   
   # output in Datei schreiben
-  write.table(output, file=filename, row.names=FALSE, col.names=FALSE, append = TRUE, sep = "\t") 
+  write.table(output_more, file=filename, row.names=FALSE, col.names=FALSE, append = TRUE, sep = "\t") 
   print(paste("Erstellt:",filename,sep = " "))
-  
+ 
 }
 
 # Testaufruf mit rma, header und GENENAME:
