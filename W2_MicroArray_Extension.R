@@ -162,39 +162,51 @@ print_to_file <- function(dataset, norm, headerBoolean, info) {
   
   # Geninfo in Matrix einschieben
   output <- cbind(affyids,modded_info,exprs_vector)
-  
-  	minima  <- vector(,nrow(exprs_vector))
-	maxima  <- vector(,nrow(exprs_vector))
-	median  <- vector(,nrow(exprs_vector))
-	standarddev  <- vector(,nrow(exprs_vector))
-	variance <- vector(,nrow(exprs_vector))
-
+	
   for(i in 1:length(affyids)) {
-	minima[i] <- min(output[i,3:9])
-	maxima[i] <- max(output[i,3:9])
-	median[i] <- median(output[i,3:9])
-	standarddev[i] <- sd(output[i,3:9])
-	variance[i] <- var(output[i,3:9])
+	minout1[i] <- min(output[i,3:5])
+	maxout1[i] <- max(output[i,3:5])
+	mediout1[i] <- median(output[i,3:5])
+	sdout1[i] <- sd(output[i,3:5])
+	varout1[i] <- var(output[i,3:5])
+	minout2[i] <- min(output[i,6:8])
+	maxout2[i] <- max(output[i,6:8])
+	mediout2[i] <- median(output[i,6:8])
+	sdout2[i] <- sd(output[i,6:8])
+	varout2[i] <- var(output[i,6:8])
   }
-output_more <- cbind(output, minima, maxima, median, standarddev, variance)
-  
-  
+ output_ext <- cbind(output, minout1, minout2, maxout1, maxout2, mediout1, mediout2, sdout1, sdout2, varout1, varout2)
+  varNames <- c("Min_Gesund","Min_TNF","Max_Gesund", "Max_TNF", "Median_Gesund", "Median_TNF", "SD_Gesund", "SD_TNF", "Var_Gesund","Var_TNF")
   # header erstellen
   if(isTRUE(headerBoolean)) {
-    header <- append(c("AffyID",info),sampleNames(eset),2)
+    header <- append(c("AffyID",info),sampleNames(eset),varNames)
     # header in Datei schreiben
     write.table(t(header), file = filename, row.names = FALSE, col.names = FALSE, append = FALSE, sep = "\t")
   }
   
   # output in Datei schreiben
-  write.table(output_more, file=filename, row.names=FALSE, col.names=FALSE, append = TRUE, sep = "\t") 
+  write.table(output_ext, file=filename, row.names=FALSE, col.names=FALSE, append = TRUE, sep = "\t") 
   print(paste("Erstellt:",filename,sep = " "))
- 
+  
 }
 
 # Testaufruf mit rma, header und GENENAME:
-print_to_file(Data_All, "rma", TRUE, "GENENAME")
-print_to_file(Data_All, "mas5", TRUE, "SYMBOL")
+print_to_file(Data_Ohne_Aussreisser, "rma", TRUE, "GENENAME")
+print_to_file(Data_All, "rma", TRUE, "SYMBOL")
+
+# t-test der Expressionsvectoren der beiden Gruppen(gesund und TNF)
+eset1 <- rma(Data_Gesund)
+eset2 <- rma(Data_TNF)
+exprs_vector <- exprs(eset1)
+exprs_vector2 <- exprs(eset2)
+tt <- t.test(exprs_vector, exprs_vector2, var.equal=TRUE)
+
+# Signal Log Ratio berechnen
+ps1 <- probeset(Data_Gesund, affyids[1:length(affyids)])
+ps2 <- probeset(Data_TNF, affyids[1:length(affyids)])
+
+for (i in 1:length(affyids)) {
+	slr <- pm(ps1[[i]])-mm(ps1[[i]])/pm(ps2[[i]])-mm(ps2[[i]])
 
 # Ausgegeben der MMs, PMs und affyIDs:
 # pm(Data_All)
