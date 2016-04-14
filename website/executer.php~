@@ -1,0 +1,24 @@
+<?php
+
+echo "<script type=\"text/javascript\">
+//read the value for
+var myname = \"mahnamey\";
+
+//perform the request
+var req = ocpu.rpc(\"hello\", {
+  myname : myname
+}, function(output){
+  $(\"#output\").text(output.message);
+});
+//if R returns an error, alert the error message
+req.fail(function(){
+  alert(\"Server error: \" + req.responseText);
+});
+
+</script>";
+
+echo '
+<p id="output"></p>
+';
+
+?>

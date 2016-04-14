@@ -1,0 +1,2 @@
+# Normalisierung:
+normalized <- rma(data)
