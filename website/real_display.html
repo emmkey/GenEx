@@ -1,0 +1,45 @@
+<html>
+<head>
+	<?php require_once('functions.php') ?>
+	<!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    
+
+</head>
+<body>
+	<?php
+	//Tabellennamen auslesen
+	$tablename = $_GET['tbname'];
+	?>
+
+	<h3>Filter</h1>
+	<hr>
+	<div>
+		<select name="filterselection" size="1">
+	    	<option>Show Top 100</option>
+	    	<option>Example</option>
+	    	<option>Example</option>
+	    	<option>Example</option>
+	    	<option>Example</option>
+	  	</select>
+		<hr>
+		<input type="submit" id="applybtn" value="ApplyFilter" onclick="applyfilter();"></input>
+		<script type="text/javascript" src="real_display.js"></script>
+		<hr>
+	</div>
+	
+
+	
+
+
+	<?php
+		echo "testestest";
+		$conn->close();
+	?>
+
+</body>
+</html>
+
