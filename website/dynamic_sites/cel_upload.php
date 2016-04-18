@@ -3,6 +3,6 @@
 	<br><br>
  	Enter path to R: <input name="rpfad" type="text">
  	<br><br><br><p>Choose CEL-Files:<br></p> 
-	<input name="Datei" type="file" size="50" accept="text/*"> 
+	<input name="Datei[]" type="file" size="50" multiple="multiple"> 
   	<button type="submit">Upload</button>
 </form>

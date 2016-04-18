@@ -57,4 +57,53 @@
 		}
 		echo "</table>";
 	}
+
+	//Verzeichnisse zum Speichern des User-In- und Outputs
+	function makeDir() {
+		$dirname = strval(time());
+		mkdir("./Output/$dirname", 0700);
+		//Ordner fuer Plots
+		mkdir("./Output/$dirname/plots", 0700);
+		//Ordner fuer txt-Tabellen
+		mkdir("./Output/$dirname/tables", 0700);
+		//Ordner erstellen fuer Workingdirectory(R)
+		mkdir("./Output/$dirname/wd", 0700);
+
+		return $dirname;
+	}
+
+	//verschiebt alle hochgeladenen CEL-Files in die Workingdirectory
+	function moveCels($dirname) {
+
+        //Zaehlen, wie viele Dateien hochgeladen wurden
+        $filecounter = count($_FILES['Datei']['name']);
+
+		// Loop through each file
+		for($i=0; $i<$filecounter; $i++) {
+	  		//tmp_name von File auslesen
+	  		$tmpFilePath = $_FILES['Datei']['tmp_name'][$i];
+
+	  		//Sicherstellen, dass es Dateipfad gibt
+	  		if ($tmpFilePath != ""){
+
+	    		//"Ziel-Pfad" festlegen
+	    		$newFilePath = "./Output/$dirname/wd/" . $_FILES['Datei']['name'][$i];
+
+	    		//Datei verschieben
+	    		if(move_uploaded_file($tmpFilePath, $newFilePath)) {
+
+	      			echo "Datei verschoben nach $newFilePath";
+
+	    		}
+	  		}
+		}
+	}
+
+	//Workingdirectory setzen
+	function setWd($dirname, $rscript) {
+		$rcode = 'setwd("./Output/' . $dirname . '/wd")';
+		$newscript = $rcode . $rscript;
+
+		return $newscript;
+	}
 ?>
