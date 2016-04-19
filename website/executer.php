@@ -61,6 +61,10 @@ if ($tablename = writeToDb($filename)) {
 	echo "Tabelle erstellt: $tablename";
 }
 
+echo "<script type=\"text/javascript\">
+		window.location.href=\"index.php?page=display_txt&tbname=$tablename\";
+		</script>"; 
+?>
 
 
 ?>

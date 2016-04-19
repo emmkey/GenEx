@@ -1,9 +1,10 @@
 function applyfilter() {
-		document.write("bullshit!");
-		<?php 
-			$conn = connect();
-			$query = "SELECT * FROM `$tablename` LIMIT 100";
-			print_results($tablename, $query);
-		?>
+		
+		var option = $('#selection').val();
+
+		$.post('show.php',{postoption:option,posttablename:tablename},
+			function(data) {
+				$('#result').html(data);
+			});
 
 }
