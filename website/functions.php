@@ -98,7 +98,7 @@
 	    		//Datei verschieben
 	    		if(move_uploaded_file($tmpFilePath, $newFilePath)) {
 
-	      			echo "Datei verschoben nach $newFilePath";
+	      			echo "Datei verschoben nach $newFilePath<br/>";
 
 	    		}
 	  		}
