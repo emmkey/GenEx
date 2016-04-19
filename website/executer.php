@@ -6,7 +6,7 @@ require_once("functions.php");
 
 //Verzeichnis fuer den Output erstellen
 if ($dirname = makeDir()) {
-	echo "Output Verzeichnis erstellt: $dirname";
+	echo "Output Verzeichnis erstellt: $dirname <br/>";
 }
 
 moveCels($dirname);
