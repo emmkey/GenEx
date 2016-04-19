@@ -18,7 +18,7 @@
 	}
 	
 	//Header von beliebiger Tabelle bekommen
-	function get_header($tablename) {
+	function get_header($tablename,$conn) {
 		$header_query = "SHOW columns FROM `$tablename`";
 		$result = $conn->query($header_query);
 
@@ -26,12 +26,12 @@
 	}
 
 	//Abfrage als Tabelle ausgeben
-	function print_results($tablename, $query) {
+	function print_results($tablename, $query, $conn) {
 		//Tabelle erstellen
 		echo "<table class=\"table\">";
 
 		//Header auslesen
-		$result = getheader($tablename);
+		$result = get_header($tablename,$conn);
 
 		//Header ausgeben
 		echo "<tr>";

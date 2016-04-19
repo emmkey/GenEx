@@ -4,23 +4,25 @@ require_once("functions.php");
 
 $tablename = $_POST['posttablename'];
 $option = $_POST['postoption'];
-echo "This is post: $option<br>This is tablename: $tablename";
+//echo "This is post: $option<br>This is tablename: $tablename";
 
-$conn <- connect();
+$conn = connect();
+
+$query = "";
 
 switch ($option) {
     case "All":
-        $query = 
+        $query = "SELECT * FROM `$tablename`";
         break;
-    case "Balken":
-        echo "i ist Balken";
+    case "Top 100":
+        $query = "SELECT * FROM `$tablename` LIMIT 100";
         break;
     case "Kuchen":
         echo "i ist Kuchen";
         break;
 }
 
-print_results($tablename, $query);
+print_results($tablename, $query, $conn);
 
 
 
