@@ -36,7 +36,7 @@ file_put_contents($file, $setwdR);
 //echo "<br> filename: $filename";
 
 $rpath = $_POST['rpfad'];
-echo "R-Pfad: " . $rpath;
+echo "R-Pfad: $rpath";
 
 if (strtoupper(substr(php_uname('s'), 0, 3)) === 'WIN') {
 //$command = '"$rpath\bin\R.exe" "C:\XAMPP\htdocs\SWPwebseite\R\testscript.R"';
