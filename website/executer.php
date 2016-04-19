@@ -2,7 +2,8 @@
 
 require_once("functions.php");
 
-
+$rpath = $_POST['rpfad'];
+echo "Eingegebener R-Pfad: $rpath <br/>";
 
 //Verzeichnis fuer den Output erstellen
 if ($dirname = makeDir()) {
@@ -29,14 +30,8 @@ $setwdR .= $current;
 // Schreibt den Inhalt in die Datei zurück
 file_put_contents($file, $setwdR);
 
-
-
-
 //$filename = $_FILES['Datei']['name'];
 //echo "<br> filename: $filename";
-
-$rpath = $_POST['rpfad'];
-echo "R-Pfad: $rpath";
 
 if (strtoupper(substr(php_uname('s'), 0, 3)) === 'WIN') {
 //$command = '"$rpath\bin\R.exe" "C:\XAMPP\htdocs\SWPwebseite\R\testscript.R"';
@@ -60,7 +55,5 @@ $filename = "./Output/$dirname/tables/outtable.txt";
 if ($tablename = writeToDb($filename)) {
 	echo "Tabelle erstellt: $tablename";
 }
-
-
 
 ?>
