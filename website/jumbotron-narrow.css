@@ -86,3 +86,14 @@ div {
   background-color: #f1f1f1;
 }
 
+.fixedTop{
+  background-color: white;
+  position:fixed;
+  width:850px;
+  margin:0 auto;
+  top:0px;
+}
+
+.paint-black {
+  background-color: black;
+}

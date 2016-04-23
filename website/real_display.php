@@ -1,6 +1,7 @@
 <html>
 <head>
 	<script type="text/javascript" src="js/jquery.js"></script>	
+	<script type="text/javascript" src="js/stickyheader.js"></script>	
 	<?php require_once('functions.php') ?>
 	<!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -22,10 +23,10 @@
 	var tablename = "<?php echo $tablename; ?>";
 	</script>
 	
-
+	<div id="filter_select">
 	<h3>Filter</h1>
 	<hr>
-	<div>
+	
 		<select id="selection" name="filterselection" size="1">
 	    	<option>All</option>
 	    	<option>Top 100</option>

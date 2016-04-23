@@ -70,8 +70,9 @@
 		$result = get_header($tablename,$conn);
 
 		//Header ausgeben
-	
+		
 		echo "<thead>";
+		//echo "<div id='s_header'>";
 		echo "<tr>";
 		while ($header = $result->fetch_array(MYSQLI_NUM)) {
 			echo "<th> $header[0] </th>";
@@ -79,7 +80,9 @@
 
 
 		echo "</tr>";
+		//echo "</div>";
 		echo "</thead>";
+		
 
 
 		//clean result
