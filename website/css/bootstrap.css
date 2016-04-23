@@ -220,6 +220,8 @@ th {
   }
   thead {
     display: table-header-group;
+    background-color:black;
+    position: fixed;
   }
   tr,
   img {
@@ -6758,3 +6760,4 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+

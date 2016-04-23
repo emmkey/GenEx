@@ -20,7 +20,6 @@
 	//printbuttons
 	function print_buttons($number) {
 		echo "<div id='pagination'>";
-		echo "<h4>Pagination</h4>";
 		echo "<hr>";
 		for ($x = 1; $x <= $number; $x++) {
 			//echo "<button id=\"btn_$x\" value=\"$x\">";
@@ -41,12 +40,14 @@
 	//Abfrage als Tabelle ausgeben
 	function print_results($tablename, $query, $conn, $page) {
 		//Tabelle erstellen
-		echo "<table class=\"table\">";
+		echo "<table class=\"table\" id=\"resultT\">";
 
 		//Header auslesen
 		$result = get_header($tablename,$conn);
 
 		//Header ausgeben
+	
+		echo "<thead>";
 		echo "<tr>";
 		while ($header = $result->fetch_array(MYSQLI_NUM)) {
 			echo "<th> $header[0] </th>";
@@ -54,6 +55,8 @@
 
 
 		echo "</tr>";
+		echo "</thead>";
+
 
 		//clean result
 		$result->free();
@@ -83,15 +86,32 @@
 
 		$outputarray = array_slice($result_array, $offset, $length);
 		
-
+		echo "<tbody>";
 		foreach ($outputarray as $row) {
 			echo "<tr>";	
 			foreach($row as $column) {
-				echo "<th> $column </th>";
+				echo "<td> $column </td>";
 			}
 			echo "</tr>";
 		}
+		echo "</tbody>";
+		echo "</table>";
 
+		//Zeilen "Zebraen" (Farben wechseln sich ab zur besseren Uebersicht)
+		echo '
+		<script>
+
+		var allRows = document.getElementsByTagName("tr");
+		for (var i = 0; i < allRows.length; i++) {
+			if(i % 2 !== 0) {
+				allRows[i].classList.add("paint-row");
+			}
+		}
+
+		</script>
+
+		';
+	
 
 		print_buttons(mysqli_num_rows($result)/50);
 	}

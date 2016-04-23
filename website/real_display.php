@@ -1,9 +1,9 @@
 <html>
 <head>
-	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>	
 	<?php require_once('functions.php') ?>
 	<!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="jumbotron-narrow.css" rel="stylesheet">
 
@@ -39,6 +39,17 @@
 		<hr>
 	</div>
 	<div id="result"></div>
+
+	<script>
+
+		var allRows = document.getElementsByTagName("tr");
+		for (var i = 0; i < allRows.length; i++) {
+			if(i % 2 !== 0) {
+				allRows[i].classList.add("paint-row");
+			}
+		}
+
+</script>
 	
 
 </body>
