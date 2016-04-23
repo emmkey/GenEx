@@ -18,12 +18,36 @@
 	}
 	
 	//printbuttons
-	function print_buttons($number) {
+	function print_buttons($totalbtns, $btn_offset) {
 		echo "<div id='pagination'>";
 		echo "<hr>";
-		for ($x = 1; $x <= $number; $x++) {
+
+		if ($btn_offset > 5) {
+			echo "<button type=\"button\" id=\"1\" onclick=\"applyfilter(this.id);\">First</button>";
+			echo "...";
+		}
+
+		if ($btn_offset < 6) {
+			$printfrom = 1;
+		}
+		else {
+			$printfrom = $btn_offset-5;
+		}
+		if ($btn_offset+5 > $totalbtns) {
+			$limit = $totalbtns;
+		}
+		else {
+			$limit = $btn_offset+5;
+		}
+		
+		for ($x = $printfrom; $x <= $limit; $x++) {
 			//echo "<button id=\"btn_$x\" value=\"$x\">";
 			echo "<button type=\"button\" id=\"$x\" onclick=\"applyfilter(this.id);\">$x</button>";
+		}
+
+		if ($btn_offset < $totalbtns-6) {
+			echo "...";
+			echo "<button type=\"button\" id=\"$totalbtns\" onclick=\"applyfilter(this.id);\">Last</button>";
 		}
 		echo "<hr>";
 		echo "</div>";
@@ -112,8 +136,9 @@
 
 		';
 	
-
-		print_buttons(mysqli_num_rows($result)/50);
+		$total_page_num = ceil(mysqli_num_rows($result)/50);
+		$btn_offset = $offset+1;
+		print_buttons($total_page_num, $page);
 	}
 
 	//Verzeichnisse zum Speichern des User-In- und Outputs
