@@ -34,7 +34,7 @@
 	    	<option>Example</option>
 	  	</select>
 		<hr>
-		<input type="submit" id="applybtn" value="ApplyFilter" onclick="applyfilter();"></input>
+		<input type="submit" id="applybtn" value="ApplyFilter" onclick="applyfilter(1);"></input>
 		<script type="text/javascript" src="real_display.js"></script>
 		<hr>
 	</div>

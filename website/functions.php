@@ -17,6 +17,14 @@
 		return $conn;
 	}
 	
+	//printbuttons
+	function print_buttons($number) {
+		for ($x = 1; $x <= $number; $x++) {
+			//echo "<button id=\"btn_$x\" value=\"$x\">";
+			echo "<button type=\"button\" id=\"$x\" onclick=\"applyfilter(this.id);\">$x</button>";
+		}
+	}
+
 	//Header von beliebiger Tabelle bekommen
 	function get_header($tablename,$conn) {
 		$header_query = "SHOW columns FROM `$tablename`";
@@ -26,7 +34,7 @@
 	}
 
 	//Abfrage als Tabelle ausgeben
-	function print_results($tablename, $query, $conn) {
+	function print_results($tablename, $query, $conn, $page) {
 		//Tabelle erstellen
 		echo "<table class=\"table\">";
 
@@ -47,7 +55,7 @@
 
 
 		$result = $conn->query($query);
-
+		/*
 		while ($row = $result->fetch_array(MYSQLI_NUM)) {
 			echo "<tr>";	
 			for($x = 0; $x < sizeof($row); $x++) {
@@ -55,7 +63,32 @@
 			}	
 			echo "</tr>";
 		}
-		echo "</table>";
+		echo "</table>";*/
+
+		//$result_array = $result->fetch_all(MYSQLI_NUM);
+
+		for ($result_array = array(); $tmp = $result->fetch_array(MYSQLI_NUM);) {
+			$result_array[] = $tmp;
+		} 
+
+		$items_per_page = 50;
+		$offset = ($page-1)*$items_per_page;
+		$length = $items_per_page;
+
+
+		$outputarray = array_slice($result_array, $offset, $length);
+		
+
+		foreach ($outputarray as $row) {
+			echo "<tr>";	
+			foreach($row as $column) {
+				echo "<th> $column </th>";
+			}
+			echo "</tr>";
+		}
+
+
+		print_buttons(mysqli_num_rows($result)/50);
 	}
 
 	//Verzeichnisse zum Speichern des User-In- und Outputs

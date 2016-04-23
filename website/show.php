@@ -4,6 +4,8 @@ require_once("functions.php");
 
 $tablename = $_POST['posttablename'];
 $option = $_POST['postoption'];
+$buttonid = $_POST['postbtnid'];
+
 //echo "This is post: $option<br>This is tablename: $tablename";
 
 $conn = connect();
@@ -22,7 +24,9 @@ switch ($option) {
         break;
 }
 
-print_results($tablename, $query, $conn);
+print_results($tablename, $query, $conn, $buttonid);
+
+
 
 
 
