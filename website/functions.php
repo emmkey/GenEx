@@ -19,10 +19,15 @@
 	
 	//printbuttons
 	function print_buttons($number) {
+		echo "<div id='pagination'>";
+		echo "<h4>Pagination</h4>";
+		echo "<hr>";
 		for ($x = 1; $x <= $number; $x++) {
 			//echo "<button id=\"btn_$x\" value=\"$x\">";
 			echo "<button type=\"button\" id=\"$x\" onclick=\"applyfilter(this.id);\">$x</button>";
 		}
+		echo "<hr>";
+		echo "</div>";
 	}
 
 	//Header von beliebiger Tabelle bekommen
