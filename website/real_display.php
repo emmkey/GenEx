@@ -1,13 +1,27 @@
 <html>
 <head>
 	<script type="text/javascript" src="js/jquery.js"></script>	
-	<script type="text/javascript" src="js/stickyheader.js"></script>	
+
+	<script type="text/javascript" src="js/jquery.freezeheader.js"></script>
+
+	<script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#resultT").freezeHeader();   
+        });
+ 
+
+    </script>
+
+
 	<?php require_once('functions.php') ?>
 	<!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="jumbotron-narrow.css" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="css/component.css" />
     
 
 </head>

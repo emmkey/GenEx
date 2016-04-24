@@ -1,4 +1,4 @@
-* ------------------------------------------------------------------------
+/* ------------------------------------------------------------------------
 Class: freezeHeader
 Use:freeze header row in html table
 Example 1:  $('#tableid').freezeHeader();
@@ -63,12 +63,14 @@ Version: 1.0.7
                                 cloneHeaderRow(obj);
                                 copiedHeader = true;
                             }
+                            obj.container.css('left', (window.pageXOffset * -1) + obj.grid.offset().left);
                         }
                         else {
 
                             if (($(document).scrollTop() > obj.header.offset().top)) {
                                 obj.container.css("position", "absolute");
                                 obj.container.css("top", (obj.grid.find("tr:last").offset().top - obj.header.height()) + "px");
+                                obj.container.css('left', (window.pageXOffset * -1) + obj.grid.offset().left);
                             }
                             else {
                                 obj.container.css("visibility", "hidden");
@@ -118,22 +120,22 @@ Version: 1.0.7
 
             if (params && params.height !== undefined) {
                
-		if(params.offset !== undefined){
-			obj.container.css("top", obj.scroller.offset().top + (params.offset.replace("px","") * 1) + "px");
-		}
-		else
-		{
-			obj.container.css("top", obj.scroller.offset().top + "px");
-		}
-				
+        if(params.offset !== undefined){
+            obj.container.css("top", obj.scroller.offset().top + (params.offset.replace("px","") * 1) + "px");
+        }
+        else
+        {
+            obj.container.css("top", obj.scroller.offset().top + "px");
+        }
+                
                 obj.container.css("position", "absolute");
-				
+                
             } else if (params && params.scrollListenerEl!== undefined) { 
                 obj.container.css("top", obj.scroller.find("thead > tr").innerHeight() + "px");
                 obj.container.css("position", "absolute");
                 obj.container.css("z-index", "2");
-			} else if (params && params.offset !== undefined) {
-			    obj.container.css("top", params.offset);
+            } else if (params && params.offset !== undefined) {
+                obj.container.css("top", params.offset);
                 obj.container.css("position", "fixed");
             } else {
                 obj.container.css("top", "0px");

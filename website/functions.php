@@ -138,6 +138,23 @@
 		</script>
 
 		';
+
+		echo '
+
+		<script type="text/javascript" src="js/jquery.js"></script>	
+
+	<script type="text/javascript" src="js/jquery.freezeheader.js"></script>
+
+	<script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#resultT").freezeHeader();   
+        });
+ 
+
+    </script>
+
+		';
 	
 		$total_page_num = ceil(mysqli_num_rows($result)/50);
 		$btn_offset = $offset+1;
@@ -150,13 +167,13 @@
 
 		$oldumask = umask(0);
 
-		mkdir("./Output/$dirname", 0777);
+		mkdir("./Output/$dirname", 0777, true);
 		//Ordner fuer Plots
-		mkdir("./Output/$dirname/plots", 0777);
+		mkdir("./Output/$dirname/plots", 0777, true);
 		//Ordner fuer txt-Tabellen
-		mkdir("./Output/$dirname/tables", 0777);
+		mkdir("./Output/$dirname/tables", 0777, true);
 		//Ordner erstellen fuer Workingdirectory(R)
-		mkdir("./Output/$dirname/wd", 0777);
+		mkdir("./Output/$dirname/wd", 0777, true);
 
 		umask($oldumask); 
 
