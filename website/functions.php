@@ -312,7 +312,7 @@
 
 		if ($conn->query($file_to_db) === TRUE) {
 			//printf($conn->error);
-			echo "<br> File erfolgreich in Tabelle!!!";	
+			echo "<br>File erfolgreich in Tabelle!!!";	
 
 		} else {
 			printf($conn->error);

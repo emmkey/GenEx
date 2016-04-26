@@ -2,7 +2,7 @@
 //Abfragen, ob ein File hochgeladen wurde, wenn nicht => zur Startseite
 if ($_FILES['Datei']['error'] !== 0) {
 	echo '<script type="text/javascript">
-		alert("Upload fehlgeschlagen")
+		alert("Upload fehlgeschlagen - Keine Datei ausgewählt?")
 		window.location.href="index.php?page=txt_to_db";
 		</script>'; 
 }
