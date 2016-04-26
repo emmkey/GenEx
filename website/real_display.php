@@ -51,6 +51,7 @@
 		<hr>
 		<input type="submit" id="applybtn" value="ApplyFilter" onclick="applyfilter(1);"></input>
 		<script type="text/javascript" src="real_display.js"></script>
+		<script type="text/javascript" src="js/sortBy.js"></script>
 		<hr>
 	</div>
 	<div id="result"></div>

@@ -75,8 +75,10 @@
 		//echo "<div id='s_header'>";
 		echo "<tr>";
 		while ($header = $result->fetch_array(MYSQLI_NUM)) {
-			echo "<th> $header[0] </th>";
+			echo "<th> $header[0] <a onClick=\"sortBy('" . $header[0] . "','up');\" style=\"cursor: pointer; cursor: hand;\">⇑</a> <a onClick=\"sortBy('" . $header[0] . "','down');\" style=\"cursor: pointer; cursor: hand;\">⇓</a></th>";
 		}
+
+
 
 
 		echo "</tr>";
