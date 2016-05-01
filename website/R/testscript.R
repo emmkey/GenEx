@@ -1,18 +1,39 @@
+library("optparse")
+ 
+option_list = list(
+  make_option("--wd", action="store", help="Name of table to use as WD"),
+  make_option("--all", action="store_true", default=FALSE, help="Alles plotten"),
+  make_option("--hist", action="store_true", default=FALSE, help="Histogramme plotten"),
+  make_option("--heat", action="store_true", default=FALSE, help="Heatmaps plotten")
+)
+
+ 
+ 
+opt_parser = OptionParser(option_list=option_list);
+opt = parse_args(opt_parser);
+
+
+#Namen fuer Workingdirectory einlesen
+tablename <- opt$wd
+
 # Lade affy package, hgu133plus2.db (Genzuordnung) und affyQCReport (QC-PDF) im Programm:
 library("affy")
 library("hgu133plus2.db")
 library("affyQCReport")
 library("affyPLM")
 
-#setwd("/home/admini/Uni/Softwareprojekt/TestWD")
 
+
+
+setwdd <- paste0("/home/admini/Uni/Softwareprojekt/GenEx/website/Output/", tablename, "/wd")
+print(setwdd)
+#WD setzen
+setwd(setwdd)
 print(getwd())
-
-
 Data_All <- ReadAffy()
 
 #Histogramm als Datei schreiben
-#png("../plots/histogram_unnormalized.png")
+png("../plots/histogram_unnormalized.png")
 hist(exprs(Data_All))
 
 

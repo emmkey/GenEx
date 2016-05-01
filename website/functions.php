@@ -199,7 +199,7 @@
 
 	    		//"Ziel-Pfad" festlegen
 	    		$newFilePath = "./Output/$dirname/wd/" . $_FILES['Datei']['name'][$i];
-
+	  			//$newFilePath = "./Output/wd/" . $_FILES['Datei']['name'][$i];
 	    		//Datei verschieben
 	    		if(move_uploaded_file($tmpFilePath, $newFilePath)) {
 

@@ -10,28 +10,10 @@ if ($dirname = makeDir()) {
 	echo "Output Verzeichnis erstellt: $dirname<br/>";
 }
 
+
+
 moveCels($dirname);
 
-//testscript in WD kopieren
-$file = './R/testscript.R';
-$newfile = "./Output/$dirname/wd/testscript.R";
-
-if (!copy($file, $newfile)) {
-    echo "copy $file schlug fehl...\n";
-}
-
-$file = "./Output/$dirname/wd/testscript.R";
-// Öffnet die Datei, um den vorhandenen Inhalt zu laden
-$current = file_get_contents($file);
-// Fügt eine neue Person zur Datei hinzu
-$setwdR = 'setwd("./Output/' . $dirname . '/wd")' . "\xA";
-$setwdR .= $current;
-
-// Schreibt den Inhalt in die Datei zurück
-file_put_contents($file, $setwdR);
-
-//$filename = $_FILES['Datei']['name'];
-//echo "<br> filename: $filename";
 
 if (strtoupper(substr(php_uname('s'), 0, 3)) === 'WIN') {
 // $command = '"$rpath\bin\Rscript.exe" "C:\XAMPP\htdocs\SWPwebseite\R\TestScript.R"';
@@ -44,7 +26,7 @@ echo "<pre>$output</pre>";
 }
 else{
 //$command = "$rpath/bin/R < /home/admini/Uni/Softwareprojekt/GenEx/website/R/testscript.R --save;";
-$command = "$rpath/bin/R < /home/admini/Uni/Softwareprojekt/GenEx/website/Output/$dirname/wd/testscript.R --save;";
+$command = "$rpath/bin/Rscript /home/admini/Uni/Softwareprojekt/GenEx/website/R/testscript.R --wd $dirname";
 $output = shell_exec($command);
 echo "<pre>$output</pre>";
 }
