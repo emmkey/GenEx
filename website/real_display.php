@@ -1,7 +1,7 @@
 <html>
 <head>
 	<script type="text/javascript" src="js/jquery.js"></script>	
-
+	<script src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/jquery.freezeheader.js"></script>
 
 	<script type="text/javascript">
@@ -75,24 +75,26 @@
 		    <li data-target="#myCarousel" data-slide-to="3"></li>
 		  </ol>
 
-		  <!-- Wrapper for slides -->
-		  <div class="carousel-inner" role="listbox">
-		    <div class="item active">
-		      <img src="Output/<?php echo $tablename; ?>/plots/" alt="Chania">
-		    </div>
+		   
+		   
+		    <div class="carousel-inner" role="listbox">
 
-		    <div class="item">
-		      <img src="img_chania2.jpg" alt="Chania">
-		    </div>
+		    <?php $dirname = "Output/$tablename/plots/";
+			$images = glob($dirname."*.png");
+			//echo '<div class="img-responsive center-block active"> <img src="'.$images[0].'" alt="'.$images[0].'"> </div>';
+			echo '<div class="item active"> <img src="'.$images[0].'" alt="'.$images[0].'"> </div>';
+			for($i = 1; $i < count($images); $i++) {
+				
+					//echo '<div class="img-responsive center-block"> <img src="'.$images[$i].'" alt="'.$images[$i].'"> </div>';
+				echo '<div class="item"> <img src="'.$images[$i].'" alt="'.$images[$i].'"> </div>';
+				
+			} ?>
+			</div>
 
-		    <div class="item">
-		      <img src="img_flower.jpg" alt="Flower">
-		    </div>
 
-		    <div class="item">
-		      <img src="img_flower2.jpg" alt="Flower">
-		    </div>
-		  </div>
+		  
+			
+
 
 		  <!-- Left and right controls -->
 		  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
