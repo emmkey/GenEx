@@ -22,10 +22,13 @@
     <link rel="stylesheet" type="text/css" href="css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="css/demo.css" />
 	<link rel="stylesheet" type="text/css" href="css/component.css" />
-    
+    <script type="text/javascript" src="real_display.js"></script>
+	<script type="text/javascript" src="js/sortBy.js"></script>
+	<script type="text/javascript" src="js/changeTab.js"></script>
 
 </head>
-<body>
+ <body onload="sortBy(1,header,direction);"> 
+<!--<body>-->
 
 	<ul id="tabz" class="nav nav-tabs">
 		<li id="plots" class="active"><a onClick="changeTab('plots');" style="cursor: pointer; cursor: hand;">Plots</a></li>
@@ -36,34 +39,26 @@
 	<?php
 	//Tabellennamen auslesen
 	$tablename = $_GET['tbname'];
+	$direction = "NULL";
+	$header = "NULL";
 	?>
 
 	<!-- Tabellennamen von PHP => Javascript -->
 	<script>
 	var tablename = "<?php echo $tablename; ?>";
+	var direction = "<?php echo $direction; ?>";
+	var header = "<?php echo $header; ?>";
 	</script>
 	
 	<div id="table-div" style="display: none;">
-	<div id="filter_select">
-	<h3>Filter</h1>
-	<hr>
+	<!--<input type="submit" id="applybtn" value="ApplyFilter" onClick="sortBy(1,'NULL','NULL');"></input>-->
+	<!--<input type="submit" id="applybtn" value="ApplyFilter" onClick="sortBy(1,header,direction);"></input>-->
 	
-		<select id="selection" name="filterselection" size="1">
-	    	<option>All</option>
-	    	<option>Top 100</option>
-	    	<option>Example</option>
-	    	<option>Example</option>
-	    	<option>Example</option>
-	  	</select>
-		<hr>
-		<input type="submit" id="applybtn" value="ApplyFilter" onclick="applyfilter(1);"></input>
-		<script type="text/javascript" src="real_display.js"></script>
-		<script type="text/javascript" src="js/sortBy.js"></script>
-		<script type="text/javascript" src="js/changeTab.js"></script>
-		<hr>
-	</div>
+	
+	
 	<div id="result"></div>
 	</div>
+	
 
 	<div id="plots-div">
 		<div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -80,6 +75,7 @@
 		    <div class="carousel-inner" role="listbox">
 
 		    <?php $dirname = "Output/$tablename/plots/";
+		    echo $dirname;
 			$images = glob($dirname."*.png");
 			//echo '<div class="img-responsive center-block active"> <img src="'.$images[0].'" alt="'.$images[0].'"> </div>';
 			echo '<div class="item active"> <img src="'.$images[0].'" alt="'.$images[0].'"> </div>';

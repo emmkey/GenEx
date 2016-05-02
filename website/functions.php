@@ -17,8 +17,22 @@
 		return $conn;
 	}
 	
+	function addOrUpdateUrlParam($name, $value) {
+	    $params = $_GET;
+	    unset($params[$name]);
+	    $params[$name] = $value;
+	    return basename($_SERVER['PHP_SELF']).'?'.http_build_query($params);
+	}
+
+
 	//printbuttons
-	function print_buttons($totalbtns, $btn_offset) {
+	function print_buttons($totalbtns, $btn_offset, $header, $direction) {
+		?><script>
+		var direction = "<?php echo $direction; ?>";
+		var header = "<?php echo $header; ?>";
+		</script><?php
+
+
 		echo "<div id='pagination'>";
 		echo "<hr>";
 
@@ -42,12 +56,13 @@
 		
 		for ($x = $printfrom; $x <= $limit; $x++) {
 			//echo "<button id=\"btn_$x\" value=\"$x\">";
-			echo "<button type=\"button\" id=\"$x\" onclick=\"applyfilter(this.id);\">$x</button>";
+			
+			echo "<button type=\"button\" id=\"$x\" onclick=\"sortBy(this.id,header,direction);\">$x</button>";
 		}
 
 		if ($btn_offset < $totalbtns-6) {
 			echo "...";
-			echo "<button type=\"button\" id=\"$totalbtns\" onclick=\"applyfilter(this.id);\">Last</button>";
+			echo "<button type=\"button\" id=\"$totalbtns\" onclick=\"sortBy(this.id,header,direction);\">Last</button>";
 		}
 		echo "<hr>";
 		echo "</div>";
@@ -62,7 +77,7 @@
 	}
 
 	//Abfrage als Tabelle ausgeben
-	function print_results($tablename, $query, $conn, $page) {
+	function print_results($tablename, $query, $conn, $page, $header1, $direction1) {
 		//Tabelle erstellen
 		echo "<table class=\"table\" id=\"resultT\">";
 
@@ -70,12 +85,13 @@
 		$result = get_header($tablename,$conn);
 
 		//Header ausgeben
-		
+		echo "<?php $header1 ='" . $header1 . "'; ?>";
+		echo "<?php $direction1 ='" . $direction1 . "'; ?>";
 		echo "<thead>";
 		//echo "<div id='s_header'>";
 		echo "<tr>";
 		while ($header = $result->fetch_array(MYSQLI_NUM)) {
-			echo "<th> $header[0] <a onClick=\"sortBy('" . $header[0] . "','up');\" style=\"cursor: pointer; cursor: hand;\">⇑</a> <a onClick=\"sortBy('" . $header[0] . "','down');\" style=\"cursor: pointer; cursor: hand;\">⇓</a></th>";
+			echo "<th> $header[0] <a onClick=\"sortBy(1,'" . $header[0] . "','up');\" style=\"cursor: pointer; cursor: hand;\">⇑</a> <a onClick=\"sortBy(1,'" . $header[0] . "','down');\" style=\"cursor: pointer; cursor: hand;\">⇓</a></th>";
 		}
 
 
@@ -90,7 +106,7 @@
 		//clean result
 		$result->free();
 
-
+		//echo $query;
 		$result = $conn->query($query);
 		/*
 		while ($row = $result->fetch_array(MYSQLI_NUM)) {
@@ -160,7 +176,7 @@
 	
 		$total_page_num = ceil(mysqli_num_rows($result)/50);
 		$btn_offset = $offset+1;
-		print_buttons($total_page_num, $page);
+		print_buttons($total_page_num, $page, $header1, $direction1);
 	}
 
 	//Verzeichnisse zum Speichern des User-In- und Outputs

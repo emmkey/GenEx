@@ -1,8 +1,6 @@
-function sortBy(header,direction) {
-	
-		var option = $('#selection').val();
-
-		$.post('sorter.php',{postoption:option,posttablename:tablename,postheader:header,postdirection:direction},
+function sortBy(buttonid,header,direction) {
+		
+		$.post('sorter.php',{postbtnid:buttonid,posttablename:tablename,postheader:header,postdirection:direction},
 			function(data) {
 				$('#result').html(data);
 			});

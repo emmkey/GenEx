@@ -2,9 +2,13 @@
 
 require_once("functions.php");
 
+$buttonid = $_POST['postbtnid'];
+
+$newurl = addOrUpdateUrlParam($page, $pagenumber);
+
 $tablename = $_POST['posttablename'];
 $option = $_POST['postoption'];
-$buttonid = $_POST['postbtnid'];
+
 
 //echo "This is post: $option<br>This is tablename: $tablename";
 

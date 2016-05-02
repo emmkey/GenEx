@@ -2,28 +2,38 @@
 
 require_once("functions.php");
 
-$tablename = $_POST['posttablename'];
-$option = $_POST['postoption'];
-$header = $_POST['postheader'];
-$direction = $_POST['postdirection'];
+$pagenumber = $_POST['postbtnid'];
 
-//echo "This is post: $option<br>This is tablename: $tablename";
+/*$newurl = addOrUpdateUrlParam("page", $pagenumber);
+
+header( "Location: $newurl" );*/
+
+$tablename = $_POST['posttablename'];
+$direction = $_POST['postdirection'];
+$header = $_POST['postheader'];
+
+
+/*
+//UP o. DOWN und header per GET abfragen
+$direction = $_GET['direc'];
+$header = $GET['header'];
+
+
+//Falls nach etwas anderem sortiert wurde => header und UP o. DOWN von Javascript holen
+if ("NULL" != $_POST['postdirection']) {
+    $direction = $_POST['postdirection'];
+    $newurl = addOrUpdateUrlParam("direc", $direction);
+    header( "Location: $newurl" );
+
+    $header = $_POST['postheader'];
+    $newurl = addOrUpdateUrlParam("header", $header);
+    header( "Location: $newurl" );
+}
+*/
 
 $conn = connect();
 
-$query = "";
-
-switch ($option) {
-    case "All":
-        $query = "SELECT * FROM `$tablename`";
-        break;
-    case "Top 100":
-        $query = "SELECT * FROM `$tablename` LIMIT 100";
-        break;
-    case "Kuchen":
-        echo "i ist Kuchen";
-        break;
-}
+$query = "SELECT * FROM `$tablename`";
 
 
 //append query
@@ -35,7 +45,7 @@ elseif ($direction == "down") {
 }
 
 
-print_results($tablename, $query, $conn, 1);
+print_results($tablename, $query, $conn, $pagenumber, $header, $direction);
 ?>
 
 
