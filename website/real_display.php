@@ -131,28 +131,43 @@
 		
 		echo "Archive erfolgreich erstellt.";
 		echo '<a href="' . $zip . '">Download Plots as Zip</a>';
+		*/
+		$zipname = "Output/" . $tablename . "/" . $tablename . "_plots.zip";
+		$tozip = "Output/" . $tablename . "/plots/*.png";
 		
-		$zipname = "./Output/" . $tablename . "/" . $tablename . "_plots.zip";
-		$tozip = "./Output/" . $tablename . "/plots/";
-		echo "zipname: " . $zipname . "<br>";
-		echo "tozip: " . $tozip . "<br>";
-		echo getcwd();
 		$zip = new ZipArchive;
-		$zip->open($zipname, ZipArchive::CREATE);
+		$zip->open($zipname, ZipArchive::OVERWRITE);
+		
 		foreach (glob($tozip) as $file) {
 		    $zip->addFile($file);
 		    
+		    
 		}
-		echo "status: " . $zip->getStatusString();
+		
 		$zip->close();
-		echo "status: " . $zip->getStatusString();
-*/
+		
+		$oldname = "Output/" . $tablename . "/tables/outtable.txt";
+		$newname = "Output/" . $tablename . "/tables/" . $tablename . "_table.txt";
+		rename($oldname, $newname);
+		
 
+		//header("Content-type: text/plain");
+   		//header("Content-Disposition: attachment; filename=$newname");
 
 		?>
-
-
-
+		<div id="downloadz">
+		<table id="dwn_table">
+		<tr>
+		<td><h4>Plots as Zip</h4></td>
+		<td><a href="<?php echo $zipname; ?>" class="btn btn-info" role="button">Download</a></td>
+		</tr>
+		<tr>
+		<td><h4>Table</h4></td>
+		<td><a href="downloadtxt.php?table=<?php echo $tablename; ?>" class="btn btn-info" role="button">Download</a></td>
+		</tr>
+		</table>
+		</div>
+		<div id="downloadz2"></div>
 
 
 	</div>
