@@ -61,28 +61,30 @@
 	
 
 	<div id="plots-div">
-		<div id="myCarousel" class="carousel slide" data-ride="carousel">
-  		<!-- Indicators -->
+		<div id="myCarousel" class="carousel slide" data-ride="carousel" >
+  		<!-- Indicators 
 		  <ol class="carousel-indicators">
 		    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 		    <li data-target="#myCarousel" data-slide-to="1"></li>
 		    <li data-target="#myCarousel" data-slide-to="2"></li>
 		    <li data-target="#myCarousel" data-slide-to="3"></li>
-		  </ol>
+		  </ol>-->
 
 		   
 		   
-		    <div class="carousel-inner" role="listbox">
-
+		    <!--<div class="carousel-inner" role="listbox" style=" width:500px; height: auto !important;">-->
+			<div class="carousel-inner" role="listbox" style="width: 400px; margin: 0 auto">
 		    <?php $dirname = "Output/$tablename/plots/";
-		    echo $dirname;
+		    //echo $dirname;
 			$images = glob($dirname."*.png");
 			//echo '<div class="img-responsive center-block active"> <img src="'.$images[0].'" alt="'.$images[0].'"> </div>';
-			echo '<div class="item active"> <img src="'.$images[0].'" alt="'.$images[0].'"> </div>';
+			echo '<div class="item active"> <img src="'.$images[0].'" alt="'.$images[0].'" > </div>';
+			//echo '<div class="img-responsive center-block"> <img src="'.$images[0].'" alt="'.$images[0].'"> </div>';
 			for($i = 1; $i < count($images); $i++) {
 				
-					//echo '<div class="img-responsive center-block"> <img src="'.$images[$i].'" alt="'.$images[$i].'"> </div>';
-				echo '<div class="item"> <img src="'.$images[$i].'" alt="'.$images[$i].'"> </div>';
+				//echo '<div class="img-responsive center-block"> <img src="'.$images[$i].'" alt="'.$images[$i].'"> </div>';
+				echo '<div class="item"> <img src="'.$images[$i].'" alt="'.$images[$i].'" > </div>';
+				//echo '<div class="img-responsive center-block"> <img src="'.$images[$i].'" alt="'.$images[$i].'"> </div>';
 				
 			} ?>
 			</div>
@@ -102,6 +104,57 @@
 		    <span class="sr-only">Next</span>
 		  </a>
 		</div>
+
+		<!-- Alle Plots in Zip Datei speichern und zum Download anbieten -->
+		<?
+		// die maximale Ausführzeit erhöhen
+		//ini_set("max_execution_time", 300);
+		/*
+		// Objekt erstellen und schauen, ob der Server zippen kann
+		$zip = new ZipArchive();
+		$zipname = "./Output/" . $tablename . "/" . $tablename . "_plots.zip";
+		echo "zipname: " . $zipname;
+		if ($zip->open($zipname, ZIPARCHIVE::CREATE) !== TRUE) {
+			die ("Could not open archive");
+		}
+		$tozip = "./Output/" . $tablename . "/plots/";
+		echo "topzip: " . $tozip;
+		// Gehe durch die Ordner und füge alles dem Archiv hinzu
+		$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($tozip));
+		foreach ($iterator as $key=>$value) {
+			$zip->addFile(realpath($key), $key) or die ("ERROR: Could not add file: $key");
+		}
+		// speicher die Zip-Datei
+		//echo $zip.getStatusString();
+		$zip->close();
+			
+		
+		echo "Archive erfolgreich erstellt.";
+		echo '<a href="' . $zip . '">Download Plots as Zip</a>';
+		
+		$zipname = "./Output/" . $tablename . "/" . $tablename . "_plots.zip";
+		$tozip = "./Output/" . $tablename . "/plots/";
+		echo "zipname: " . $zipname . "<br>";
+		echo "tozip: " . $tozip . "<br>";
+		echo getcwd();
+		$zip = new ZipArchive;
+		$zip->open($zipname, ZipArchive::CREATE);
+		foreach (glob($tozip) as $file) {
+		    $zip->addFile($file);
+		    
+		}
+		echo "status: " . $zip->getStatusString();
+		$zip->close();
+		echo "status: " . $zip->getStatusString();
+*/
+
+
+		?>
+
+
+
+
+
 	</div>
 	
 	

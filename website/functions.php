@@ -235,7 +235,7 @@
 	}
 
 	//Textdatei in Datenbank schreiben
-	function writeToDb($filename) {
+	function writeToDb($filename,$tablename) {
 
 		//zuerst nur die erste Zeile lesen und parsen,
 		//wie viele CEL-Files die Datei hat
@@ -267,7 +267,8 @@
 		//Gibt die seit Beginn der Unix-Epoche (Januar 1 1970 00:00:00 GMT) bis jetzt vergangenen Sekunden zurück.
 		//=> einzigartiger Tabellenname
 		//strval: int => string
-		$tablename = strval(time());
+		//$tablename = strval(time());
+		
 		echo 'Tabellenname: ' . $tablename . "<br>";
 
 		//Tabelle erstellen, die vorerst nur die AffyID als Key enthaelt
