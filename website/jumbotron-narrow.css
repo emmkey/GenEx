@@ -97,6 +97,19 @@ div {
 .paint-black {
   background-color: black;
 }
+    
+.checkboxez {
+    border-width: thin;
+    border-style: solid;
+    border-color: grey;
 
+    margin: 0 auto;
+
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+
+}
+    
 
 
