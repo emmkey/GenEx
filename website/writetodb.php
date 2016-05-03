@@ -79,15 +79,17 @@ for ($x = 1; $x < sizeof($num_colums[0]); $x++) {
 	//dann nur die Anfuehrungszeichen wegschneiden
 	if (strpos($col_name, '.CEL') == false) {
     		$col_name = substr($col_name,1,-1);
+    		$alter_query = "ALTER TABLE `$tablename` ADD `$col_name` VARCHAR(200) NOT NULL";
 	//Wenn .CEL vorhanden, dann Anfuehrungszeichen und ".CEL" wegschneiden	
 	} else {
 		$col_name = substr($col_name,1,-5);
+		$alter_query = "ALTER TABLE `$tablename` ADD `$col_name` DOUBLE NOT NULL";
 	}
 	
 	//zurechtgeschnittene Zeilenbezeichnung in header-array schreiben
 	$header_array[] = $col_name;
 
-	$alter_query = "ALTER TABLE `$tablename` ADD `$col_name` VARCHAR(200) NOT NULL";
+	//$alter_query = "ALTER TABLE `$tablename` ADD `$col_name` VARCHAR(200) NOT NULL";
 	if ($conn->query($alter_query) === TRUE) {
 		echo "<br>" . "Spalte fuer CEL-File hinzugefuegt";
 	} else {
