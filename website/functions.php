@@ -37,7 +37,7 @@
 		echo "<hr>";
 
 		if ($btn_offset > 5) {
-			echo "<button type=\"button\" id=\"1\" onclick=\"applyfilter(this.id);\">First</button>";
+			echo "<button type=\"button\" id=\"1\" onclick=\"sortBy(this.id,header,direction);\">First</button>";
 			echo "...";
 		}
 

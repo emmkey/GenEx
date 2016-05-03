@@ -5,11 +5,11 @@
 	<script type="text/javascript" src="js/jquery.freezeheader.js"></script>
 
 	<script type="text/javascript">
-
+/*
         $(document).ready(function () {
             $("#resultT").freezeHeader();   
         });
- 
+ */
 
     </script>
 
@@ -136,8 +136,8 @@
 		$tozip = "Output/" . $tablename . "/plots/*.png";
 		
 		$zip = new ZipArchive;
-		$zip->open($zipname, ZipArchive::OVERWRITE);
-		
+		$zip->open($zipname, ZipArchive::CREATE);
+	
 		foreach (glob($tozip) as $file) {
 		    $zip->addFile($file);
 		    
@@ -145,10 +145,10 @@
 		}
 		
 		$zip->close();
-		
+		/*
 		$oldname = "Output/" . $tablename . "/tables/outtable.txt";
 		$newname = "Output/" . $tablename . "/tables/" . $tablename . "_table.txt";
-		rename($oldname, $newname);
+		rename($oldname, $newname);*/
 		
 
 		//header("Content-type: text/plain");

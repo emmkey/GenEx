@@ -35,7 +35,7 @@ echo "<pre>$output</pre>";
 //echo "Dateiinhalt: " . nl2br($zitate);
 
 //Durch R-Skript erzeugte Tabelle jetzt in die Datenbank schreiben
-$filename = "./Output/$dirname/tables/outtable.txt";
+$filename = "./Output/$dirname/tables/" . $dirname . "_table.txt";
 
 if ($tablename = writeToDb($filename,$dirname)) {
 	echo "Tabelle erstellt: $tablename";

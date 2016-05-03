@@ -25,6 +25,7 @@ library("affyPLM")
 
 
 setwdd <- paste0("/home/admini/Uni/Softwareprojekt/GenEx/website/Output/", tablename, "/wd")
+filename <- paste0("../tables/", tablename, "_table.txt")
 print(setwdd)
 #WD setzen
 setwd(setwdd)
@@ -41,9 +42,9 @@ hist(exprs(Data_All))
 # norm: Normalisierungsvariante (z.B. rma oder mas5)
 # headerBoolean: TRUE oder FALSE => Soll Text-File header haben oder nicht
 # info: Welche zusaetzliche Information mit geschrieben werden soll (z.b. GENENAME oder SYMBOL)
-print_to_file <- function(dataset, norm, headerBoolean, info) {
+print_to_file <- function(filename, dataset, norm, headerBoolean, info) {
 
-  filename <- "../tables/outtable.txt"
+  #filename <- "../tables/outtable.txt"
   
   # Expressionset erstellen
   if (norm == "rma") {
@@ -111,4 +112,4 @@ print_to_file <- function(dataset, norm, headerBoolean, info) {
   
 }
 
-print_to_file(Data_All, "rma", TRUE, "SYMBOL")
+print_to_file(filename, Data_All, "rma", TRUE, "SYMBOL")
